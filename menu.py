@@ -16,7 +16,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))   # Экран
 background = pygame.transform.scale(pygame.image.load(BACKGROUND).convert(), (WIDTH, HEIGHT))  # Загрузка изображения фона
 font_small = pygame.font.Font('FONT/static/PixelifySans-Medium.ttf', 50)    # Шрифт
 
-"""Создание поверхности для кнопки"""
+"""Создание поверхности для кнопок"""
 play_surface = pygame.Surface((300, 150))
 settings_surface = pygame.Surface((300, 150))
 exit_surface = pygame.Surface((300, 150))
@@ -27,8 +27,8 @@ settings_text = font_small.render('Settings', True, STANDART_TEXT_COLOR)
 exit_text = font_small.render('Exit', True, STANDART_TEXT_COLOR)
 
 play_rect = play_text.get_rect(
-    center=(150, 
-            75))
+    center=(settings_surface.get_width() / 2, 
+            settings_surface.get_height() / 2))
 settings_rect = settings_text.get_rect(
     center=(settings_surface.get_width() / 2, 
             settings_surface.get_height() / 2))

@@ -3,29 +3,36 @@ import sys
 from game import *
 import backgroundanimation as bga
 
+from constants import *
+
 pygame.font.init()
 def restart():
-    window = (800,600)
-    screen = pygame.display.set_mode(window)
+    """Переменные, хранящие в себе настройки экрана"""
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    font_small = pygame.font.Font('FONT/static/PixelifySans-Medium.ttf', 50)
+    """Background animation (под вопросом использования)"""
     background = bga.backanimation()
 
-    font_small = pygame.font.Font(None, 30)
+    """Создание поверхности для кнопок"""
+    restart_surface = pygame.Surface((425, 50))
+    exit_surface = pygame.Surface((308, 50))
 
-    restart_surface = pygame.Surface((100,50)) # задает размер
-    exit_surface = pygame.Surface((100,50))
+    """Отображение текста на кнопке"""
+    lose_text = font_small.render('DEFEAT',True, (STANDART_TEXT_COLOR)) # рисует наш текст и задаем ему цвет
+    restart_text = font_small.render('Restart',True, (STANDART_TEXT_COLOR))
+    exit_text = font_small.render('Exit',True, (STANDART_TEXT_COLOR))
 
-    lose_text = font_small.render('You Lose!',True, (255,0,0)) # рисует наш текст и задаем ему цвет
-    restart_text = font_small.render('Restart',True, (0,255,0))
-    exit_text = font_small.render('Exit',True, (255,0,0))
+    """Отображение текста на кнопке"""
     play_rect = restart_text.get_rect(
-        center=(restart_surface.get_width() /2, 
-                restart_surface.get_height()/2)) # прикрепляем наш текст к рачположению на экране
+        center=(restart_surface.get_width() / 2 - 100, 
+                restart_surface.get_height() / 2))
     exit_rect = exit_text.get_rect(
-        center=(exit_surface.get_width() /2, 
-                exit_surface.get_height()/2))
+        center=(exit_surface.get_width() / 2 - 100, 
+                exit_surface.get_height() / 2))
 
+    """Границы кнопок"""
     lose_rect = pygame.Rect(325,200,400,350)
-    playbutton_rect = pygame.Rect(325,300,150,100)
+    playbutton_rect = pygame.Rect(325,300, 150, 100)
     exitbutton_rect = pygame.Rect(325,400,150,100)
 
     while True:
@@ -43,20 +50,12 @@ def restart():
                     return
 
         if playbutton_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(restart_surface, (127,255,212), (1,1,148,148))
+            restart_text = font_small.render('Restart', True, (HOVER_TEXT_COLOR))
+        elif exitbutton_rect.collidepoint(pygame.mouse.get_pos()):
+            exit_text = font_small.render('Exit', True, (HOVER_TEXT_COLOR))
         else:
-            pygame.draw.rect(restart_surface, (0, 0, 0), (0, 0, 150, 50))
-            pygame.draw.rect(restart_surface, (255, 255, 255), (1, 1, 148, 48))
-            pygame.draw.rect(restart_surface, (0, 0, 0), (1, 1, 148, 1), 2)
-            pygame.draw.rect(restart_surface, (0, 100, 0), (1, 48, 148, 10), 2)
-
-        if exitbutton_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(exit_surface, (127,255,212), (1,1,148,148))
-        else:
-            pygame.draw.rect(exit_surface, (0, 0, 0), (0, 0, 150, 50))
-            pygame.draw.rect(exit_surface, (255, 255, 255), (1, 1, 148, 48))
-            pygame.draw.rect(exit_surface, (0, 0, 0), (1, 1, 148, 1), 2)
-            pygame.draw.rect(exit_surface, (0, 100, 0), (1, 48, 148, 10), 2)
+            restart_text = font_small.render('Restart',True, (STANDART_TEXT_COLOR))
+            exit_text = font_small.render('Exit',True, (STANDART_TEXT_COLOR))
         
         background.update()
         background.render(screen)
